@@ -9,7 +9,6 @@ import com.example.security.demo.util.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
         String token = JwtUtil.createJWT(id.toString());
 
         // 将用户信息存入redis,userId作为key
-        redisCache.setCacheObject("login:" + token, loginUser);
+        redisCache.setCacheObject("login:" + id, loginUser);
         // 将jwt信息响应给用户
         return new ResponseResult<>(200, "登录成功", token);
     }
