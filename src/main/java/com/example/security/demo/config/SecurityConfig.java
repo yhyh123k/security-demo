@@ -44,9 +44,12 @@ public class SecurityConfig{
                 .antMatchers("/user/login").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
+                // 添加过滤器
                 .and().addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                // 允许跨域
+                .cors()
+                .and()
                 .build();
-
     }
 
     @Bean

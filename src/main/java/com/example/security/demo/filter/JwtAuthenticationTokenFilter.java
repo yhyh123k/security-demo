@@ -1,10 +1,14 @@
 package com.example.security.demo.filter;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
 import com.example.security.demo.entity.LoginUser;
+import com.example.security.demo.entity.User;
 import com.example.security.demo.util.JwtUtil;
 import com.example.security.demo.util.RedisCache;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,6 +33,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private RedisCache redisCache;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -47,9 +54,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             e.printStackTrace();
             throw new RuntimeException("token非法");
         }
-
-        // 从redis中获取用户信息
         LoginUser user = redisCache.getCacheObject("login:" + uid);
+        // 从redis中获取用户信息
         if (Objects.isNull(user)) {
             throw new RuntimeException("用户未登录");
         }

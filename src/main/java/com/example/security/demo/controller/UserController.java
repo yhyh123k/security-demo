@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping("/hello")
-    @PreAuthorize("hasAnyAuthority('test')")
+    @PreAuthorize("@sg.hasAuthority('system:dept:list')")
     public ResponseResult<String> hello() {
         return new ResponseResult<>(201, "获取数据成功", "hello");
     }
