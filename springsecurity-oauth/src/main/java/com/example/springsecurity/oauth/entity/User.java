@@ -1,22 +1,23 @@
 package com.example.springsecurity.oauth.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author yh
- * @date 2022/7/13 22:08
- */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginUser implements UserDetails {
+public class User implements UserDetails {
+
+    public User(String username, String password, List<GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     private String username;
     private String password;
     private List<GrantedAuthority> authorities;
@@ -28,12 +29,12 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override

@@ -7,11 +7,6 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
-/**
- * 授权服务器配置
- * @author yh
- * @date 2022/7/13 22:15
- */
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -22,15 +17,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                // 配置client-id
+                //配置client_id
                 .withClient("admin")
-                .secret(passwordEncoder.encode("112233"))
-                // 配置访问令牌的有效期
+                //配置client_secret
+                .secret(passwordEncoder.encode("12345"))
+                //配置访问token的有效期
                 .accessTokenValiditySeconds(3600)
-                // 用于授权成功后跳转
+                //配置redirect_uri，用于授权成功后跳转
                 .redirectUris("http://www.baidu.com")
+                //配置申请的权限范围
                 .scopes("all")
-                // 表示授权类型
+                //配置grant_type，表示授权类型
                 .authorizedGrantTypes("authorization_code");
     }
 }

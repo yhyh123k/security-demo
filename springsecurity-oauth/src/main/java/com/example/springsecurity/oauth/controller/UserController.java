@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户管理
- * @author yh
- * @date 2022/7/13 22:44
+ * @author kezhene
  */
 @RestController
 @RequestMapping("/user")
@@ -18,5 +16,4 @@ public class UserController {
     public Object getCurrentUser(Authentication authentication) {
         return authentication.getPrincipal();
     }
-
 }

@@ -1,6 +1,6 @@
 package com.example.springsecurity.oauth.service;
 
-import com.example.springsecurity.oauth.entity.LoginUser;
+import com.example.springsecurity.oauth.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,10 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-/**
- * @author yh
- * @date 2022/7/13 22:05
- */
 @Service
 public class UserServiceImpl implements UserDetailsService {
 
@@ -21,7 +17,7 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String password = passwordEncoder.encode("123");
-        return new LoginUser("admin", password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        String password = passwordEncoder.encode("12345");
+        return new User("admin", password,AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
 }
